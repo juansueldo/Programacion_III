@@ -1,5 +1,5 @@
 <?php
-include "Pizza.php";
+include "./Clases/Pizza.php";
     /*
         PizzaConsultar.php: (por POST)Se ingresa Sabor,Tipo, si coincide con algún registro del archivo Pizza.json,
         retornar “Si Hay”. De lo contrario informar si no existe el tipo o el sabor.
@@ -13,28 +13,29 @@ include "Pizza.php";
             echo $resultado;
     //}
     function  Buscar($sabor, $tipo){
-        $arrayPizza = Pizza::LeerPizzas('Pizza.json');
+        $retorno = "No se encontró coincidencia para sabor: " . $sabor . " y tipo: " . $tipo;
+        $arrayPizza = Archivos::leerArchivoJSON('./Archivos/Pizza.json');
         
         foreach ($arrayPizza as $pizza) {
-            if ($pizza->sabor == $sabor && $pizza->tipo == $tipo) {
-                return "Si Hay";
+            if ($pizza['sabor'] == $sabor && $pizza['tipo'] == $tipo) {
+                $retorno =  "Si Hay";
             }
         }
         
-        if (!buscarSabor($sabor, $arrayPizza)) {
-            return "No existe el sabor: " . $sabor;
+        if (!buscarSabor($sabor, $arrayPizza) && buscarTipo($tipo, $arrayPizza)) {
+            $retorno = "No existe el sabor: " . $sabor;
         }
         
-        if (!buscarTipo($tipo, $arrayPizza)) {
-            return "No existe el tipo: " . $tipo;
+        if (!buscarTipo($tipo, $arrayPizza) && buscarSabor($sabor, $arrayPizza)) {
+            $retorno = "No existe el tipo: " . $tipo;
         }
         
-        return "No se encontró coincidencia para sabor: " . $sabor . " y tipo: " . $tipo;
+        return $retorno;
     }
     
     function buscarSabor($sabor, $arrayPizza) {
         foreach ($arrayPizza as $pizza) {
-            if ($pizza->sabor === $sabor) {
+            if ($pizza['sabor'] === $sabor) {
                 return true;
             }
         }
@@ -43,7 +44,7 @@ include "Pizza.php";
     
     function buscarTipo($tipo, $arrayPizza) {
         foreach ($arrayPizza as $pizza) {
-            if ($pizza->tipo === $tipo) {
+            if ($pizza['tipo'] === $tipo) {
                 return true;
             }
         }

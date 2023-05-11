@@ -1,5 +1,5 @@
 <?php
-include "Pizza.php";
+include "./Clases/Pizza.php";
 if ($_SERVER['REQUEST_METHOD'] === 'POST') 
 {
         $sabor = $_POST['sabor'] ?? '';
@@ -8,7 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
         $cantidad = $_POST['cantidad'] ?? '';
 
         $pizza =  new Pizza($sabor, $precio, $tipo, $cantidad);
-        if($pizza->agregarPizza('Pizza.json')){
+        if($pizza->agregarPizza('./Archivos/Pizza.json')){
             echo "Pizza agregada";
         }
 }

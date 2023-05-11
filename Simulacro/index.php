@@ -8,6 +8,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     case 'PizzaConsultar':
       include 'PizzaConsultar.php';
       break;
+    case 'AltaVenta':
+      include 'AltaVenta.php';
+      break;
     default:
       echo 'Ruta no válida';
   }

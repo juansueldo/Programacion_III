@@ -1,4 +1,5 @@
 <?php
+include "Archivos.php";
     class Pizza{
         private $id = 0;
         public $sabor;
@@ -12,9 +13,11 @@
             if($this->ValidarString($sabor)){
                 $this->sabor = $sabor;
             }
-            //if($this->ValidarDouble($precio)){
-                $this->precio = $precio;
-            //}
+            $aux = $this->convertirNumero($precio);
+            if($this->ValidarFloat($aux)){
+                $this->precio = $aux;
+            }
+        
             if($this->ValidadorTipo($tipo)){
                 $this->tipo = $tipo;
             }
@@ -31,15 +34,20 @@
         function ValidarString($param){
             return is_string($param);
         }
-        function ValidarDouble($param){
-            return is_double($param);
+        function ValidarFloat($param){
+            return is_float($param);
         }
+        public static function convertirNumero($cadena) {
+            $retorno = 0;
+            if (is_numeric($cadena)) {
+              $retorno = floatval($cadena);
+            }
+            return $retorno;
+          }
         public function agregarPizza($archivo) {
             $retorno = false;
             
-            $pizzas = json_decode(file_get_contents($archivo), true);
-        
-            // Verificar si ya existe una pizza con el mismo tipo
+            $pizzas = Archivos::leerArchivoJSON($archivo);
             $pizzaExistente = null;
             foreach ($pizzas as &$pizza) {
                 if ($pizza['sabor'] == $this->sabor && $pizza['tipo'] == $this->tipo) {
@@ -47,13 +55,10 @@
                     break;
                 }
             }
-        
             if ($pizzaExistente != null) {
-                // Si ya existe, actualizar cantidad y precio
                 $pizzaExistente['cantidad'] += $this->cantidad;
                 $pizzaExistente['precio'] = $this->precio;
             } else {
-                // Si no existe, agregar la nueva pizza
                 $nuevaPizza = [
                     'id' => $this->id,
                     'sabor' => $this->sabor,
@@ -63,19 +68,32 @@
                 ];
                 $pizzas[] = $nuevaPizza;
             }
-        
-            if (file_put_contents($archivo, json_encode($pizzas))) {
+            if (Archivos::guardarObjetoJSON($archivo,$pizzas)) {
                 $retorno = true;
             }
             return $retorno; 
         }
-        public static function LeerPizzas($archivo) {
-            // Leer el archivo JSON
-            $usuarios = json_decode(file_get_contents($archivo), true);
-    
-            // Retornar los datos en un array de usuarios
-            return $usuarios;
-        }    
+        public static function VentaPizza($sabor, $tipo, $cantidad)
+        {
+            $retorno = false;
+            $arrayPizza = Archivos::leerArchivoJSON('./Archivos/Pizza.json');
+            $pizzaVenta = null;
+            foreach ($arrayPizza as &$pizza) {
+                if ($pizza['sabor'] == $sabor && $pizza['tipo'] == $tipo && $pizza['cantidad'] >= $cantidad) 
+                {
+                    $pizzaVenta = &$pizza;
+                    break;
+                }
+            }
+            if($pizzaVenta != null){
+                $pizzaVenta['cantidad'] -= $cantidad;
+            }
+            $pizzas[] = $arrayPizza;
+            if(Archivos::guardarObjetoJSON('./Archivos/Pizza.json', $pizzas)){
+                $retorno = true;
+            }
+            return $retorno;
+        }
     
     }
 
