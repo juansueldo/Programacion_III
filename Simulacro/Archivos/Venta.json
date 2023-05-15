@@ -1,6 +1,38 @@
-{
-    "id": null,
-    "email": "juan@gmail.com",
-    "fecha": "2023-05-11 04:29:20",
-    "nroPedido": 1
-}
+[
+    {
+        "id": 1,
+        "numeroPedido": 1861,
+        "mail": "natalia@gmail.com",
+        "saborPizza": "muzza",
+        "tipoPizza": "molde",
+        "cantidadPizza": 1,
+        "fechaPedido": "14-05-2023"
+    },
+    {
+        "id": 2,
+        "numeroPedido": 8325,
+        "mail": "juan@gmail.com",
+        "saborPizza": "anchoas",
+        "tipoPizza": "piedra",
+        "cantidadPizza": 1,
+        "fechaPedido": "14-05-2023"
+    },
+    {
+        "id": 3,
+        "numeroPedido": 9317,
+        "mail": "ruben@gmail.com",
+        "saborPizza": "muzza",
+        "tipoPizza": "piedra",
+        "cantidadPizza": 4,
+        "fechaPedido": "2023-03-15"
+    },
+    {
+        "id": 4,
+        "numeroPedido": 6657,
+        "mail": "ruben@gmail.com",
+        "saborPizza": "napolitana",
+        "tipoPizza": "molde",
+        "cantidadPizza": 6,
+        "fechaPedido": "2022-08-19"
+    }
+]

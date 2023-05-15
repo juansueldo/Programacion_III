@@ -1,13 +1,65 @@
 [
-    [
-        [
-            {
-                "id": 6,
-                "sabor": "muzza",
-                "precio": 1350.89,
-                "tipo": "molde",
-                "cantidad": 4
-            }
-        ]
-    ]
+    {
+        "id": 1,
+        "sabor": "napolitana",
+        "precio": 1530.5,
+        "tipo": "molde",
+        "cantidad": 0
+    },
+    {
+        "id": 2,
+        "sabor": "muzza",
+        "precio": 1230.4,
+        "tipo": "molde",
+        "cantidad": 8
+    },
+    {
+        "id": 3,
+        "sabor": "muzza",
+        "precio": 1230.4,
+        "tipo": "piedra",
+        "cantidad": 5
+    },
+    {
+        "id": 4,
+        "sabor": "napolitana",
+        "precio": 1430.4,
+        "tipo": "piedra",
+        "cantidad": 9
+    },
+    {
+        "id": 5,
+        "sabor": "especial",
+        "precio": 1930.49,
+        "tipo": "piedra",
+        "cantidad": 34
+    },
+    {
+        "id": 6,
+        "sabor": "especial",
+        "precio": 1930.49,
+        "tipo": "molde",
+        "cantidad": 34
+    },
+    {
+        "id": 7,
+        "sabor": "anchoas",
+        "precio": 1930.49,
+        "tipo": "molde",
+        "cantidad": 50
+    },
+    {
+        "id": 8,
+        "sabor": "anchoas",
+        "precio": 1930.49,
+        "tipo": "piedra",
+        "cantidad": 25
+    },
+    {
+        "id": 9,
+        "sabor": "cuatro quesos",
+        "precio": "1930.49",
+        "tipo": "molde",
+        "cantidad": 15
+    }
 ]

@@ -1,7 +1,9 @@
 <?php
 class Archivos
 {
-    public static function guardarObjetoJSON($ruta, $objeto)
+    #RECIBE LA RUTA DONDE SE GUARDA EL ARCHIVO, Y EL OBJETO A GUARDAR
+    #RETORNA TRUE SI SE GUARDO Y FALSE SINO SE GUARDO
+    public static function GuardarObjetoJSON($ruta, $objeto)
     {
         $retorno = false;
         if (!file_exists($ruta)) {
@@ -12,7 +14,9 @@ class Archivos
         }
         return $retorno;
     }
-    public static function leerArchivoJSON($ruta)
+    #RECIBE LA RUTA DONDE SE GUARDA EL ARCHIVO Y LO LEE
+    #RETORNA UN ARRAY CON LOS DATOS LEIDOS DEL ARCHIVO
+    public static function LeerArchivoJSON($ruta)
     {
         $datos = array();
         if (file_exists($ruta)) {
