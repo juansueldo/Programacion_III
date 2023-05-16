@@ -17,6 +17,7 @@ if($listaDeJSON!=null && count($listaDeJSON)>0)
         $ventaAuxiliar->id = $ventaJson['id'];
         $ventaAuxiliar->fechaPedido = $ventaJson['fechaPedido'];
         $ventaAuxiliar->numeroPedido = $ventaJson['numeroPedido'];
+        $ventaAuxiliar->precio = $ventaJson['precio'];
         array_push($listaDeVentas,$ventaAuxiliar);
     }
 }
@@ -28,6 +29,7 @@ foreach ($listaDeVentas as $venta ) {
         $venta->tipoHamburguesa = $datos["tipoHamburguesa"];
         $venta->aderezoHamburguesa = $datos["aderezoHamburguesa"];
         $venta->cantidadHamburguesa = $datos["cantidadHamburguesa"];
+        $venta->precio = $datos["precio"];
         echo "Se modificó la venta\n";
 
     }

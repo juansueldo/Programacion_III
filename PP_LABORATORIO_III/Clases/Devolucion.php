@@ -3,14 +3,20 @@ include_once "Archivos.php";
 
 class Devolucion
 {
-    public int $id;
-    public string $causa;
-    public int $numeroPedido;
-    public int $idCupon;
+    public  $id;
+    public  $causa;
+    public  $numeroPedido;
+    public  $idCupon;
 
-    public function __construct(string $causa, int $numeroDePedido, int $idCupon)
+
+    public function setID()
     {
-        $this->id = count(Archivos::LeerArchivoJSON("./Archivos/Devoluciones.json")) + 1;
+        $this->id = count(Archivos::LeerArchivoJSON("./Archivos/Devolucion.json")) + 1;
+    }
+
+    public function __construct( $causa,  $numeroDePedido,  $idCupon)
+    {
+        $this->setID();
         $this->causa = $causa;
         $this->numeroPedido = $numeroDePedido;
         $this->idCupon = $idCupon;
@@ -27,22 +33,11 @@ class Devolucion
 
         return $retorno;
     }
-
     public static function GuardarImagenClienteEnojado($venta)
     {
-        is_dir(getcwd() . '/ImagenesDeClientesEnojados') ?: mkdir(getcwd() . '/ImagenesDeClientesEnojados',0777, true);
-        $mailSeparado = explode("@", $venta->mail);
-        $archivo = $venta->nombreHamburguesa . '_' . $venta->tipoHamburguesa . '_' .  $mailSeparado[0] . '_' . $venta->fechaPedido;
-        $destino = "ImagenesDeClientesEnojados/" . $archivo . ".jpg";
-        $tmpName = $_FILES["imagen"]["tmp_name"];
-
-        return move_uploaded_file($tmpName, $destino);
-    }
-    public static function GuardarImagen($venta)
-    {
         is_dir(getcwd() . '/ImagenesDeClientesEnojados') ?: mkdir(getcwd() . '/ImagenesDeClientesEnojados');
-        $mailSeparado = explode("@", $venta->mail);
-        $archivo = $venta->tipoHamburguesa . '_' . $venta->nombreHamburguesa . '_' . $mailSeparado[0] . '_' . $venta->fechaPedido;
+        $mailSeparado = explode("@", $venta['mail']);
+        $archivo = $venta['tipoHamburguesa'] . '_' . $venta['nombreHamburguesa'] . '_' . $mailSeparado[0] . '_' . $venta['fechaPedido'];
         $destino = "ImagenesDeClientesEnojados/" . $archivo . ".jpg";
         $tmpName = $_FILES["imagen"]["tmp_name"];
         $retorno = false;

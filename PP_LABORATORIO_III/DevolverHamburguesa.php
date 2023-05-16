@@ -9,54 +9,63 @@ $arrayVentas = Archivos::LeerArchivoJSON("./Archivos/Venta.json");
 $arrayCupones = Archivos::LeerArchivoJSON("./Archivos/Cupones.json");
 $arrayDevoluciones = Archivos::LeerArchivoJSON("./Archivos/Devoluciones.json");
 
-$numPedido = $_POST["numeroPedido"];
-$venta = BuscarVenta($arrayVentas, $numPedido);
+$numeroPedido = $_POST["numeroPedido"];
+$causa = $_POST["causa"];
 
-$indexDevolucion = Devolucion::BuscarDevolucion($arrayDevoluciones, $numPedido);
+$ventas = Archivos::LeerArchivoJSON(".Ventas.json");
+$ventaExistente = DevolverVenta($arrayVentas, $numeroPedido);
 
-function BuscarVenta($arrayVentas, $numPedido){
-	$ventaExistente = null;
-    foreach ($arrayVentas as &$venta) {
-        if ($venta['numeroPedido'] == $numPedido) {
-            $ventaExistente = &$venta;
+
+if($ventaExistente != null ){
+    echo "Pedido encontrado \n";
+    $devolucion = new Devolucion($causa, $ventaExistente['numeroPedido'], 904);
+    Archivos::GuardarObjetoJSON("./Archivos/Devoluciones.json",$devolucion);
+    Devolucion::GuardarImagenClienteEnojado($ventaExistente);
+    $cupon = new CuponDescuento($devolucion->idCupon, $devolucion->causa,$ventaExistente['fechaPedido']);
+    Archivos::GuardarObjetoJSON("./Archivos/Cupones.json",$cupon);
+    echo ModificarVenta("./Archivos/Venta.json", $ventaExistente);
+}
+else{
+    echo "El pedido no existe \n";
+}
+
+
+function DevolverVenta($arrayVentas, $numeroPedido){
+    $venta = null;
+    foreach ($arrayVentas as &$auxVenta) {
+        if ($auxVenta['numeroPedido'] == $numeroPedido && $auxVenta['activo'] == true) {
+            $venta = &$auxVenta;
             break;
         }
     }
-	return $ventaExistente;
+    return $venta;
 }
-function BuscarDevolucion($arrayVentas, $numPedido){
-	$ventaExistente = null;
-    foreach ($arrayVentas as &$venta) {
-        if ($venta['numeroPedido'] == $numPedido) {
-            $ventaExistente = &$venta;
+function ModificarVenta($archivo, $ventaExistente)
+{
+    $retorno = "No se modifico ninguna venta";
+
+    $ventas = Archivos::LeerArchivoJSON($archivo);
+    $ventaAuxiliar = null;
+    foreach ($ventas as &$aux) {
+        if ($aux['numeroPedido'] == $ventaExistente['numeroPedido']) {
+            $ventaAuxiliar = &$aux;
             break;
         }
     }
-	return $ventaExistente;
+    if ($ventaAuxiliar != null) {
+        if($ventaAuxiliar['activo'] == true){
+            $ventaAuxiliar['activo'] = false;
+            $retorno = "Se modifico la venta";
+        }
+        else{
+            $retorno = "La venta ya tiene una devolucion";
+        }
+    }
+    Archivos::GuardarObjetoJSON($archivo, $ventas);
+
+    return $retorno;
 }
 
 
-if ($venta != null) {
-	if ($indexDevolucion == -1) {
-		echo Devolucion::GuardarImagen($ventaExistente) ? "La imagen fue guardada\n" : "La imagen no pudo guardarse.\n";
 
-		$cupon = new CuponDescuento($arrayDevoluciones[$indexDevolucion]->id, $_POST['causa']);
-		array_push($arrayCupones, $cupon);
-		Archivos::GuardarObjetoJSON( "./Archivos/Cupones.json", $arrayCupones);
 
-		$devolucion = new Devolucion($cupon->causa, $numPedido, $cupon->id);
-		array_push($arrayDevoluciones, $devolucion);
-		Archivos::GuardarObjetoJSON("./Archivos/Devoluciones.json", $arrayDevoluciones);
-
-		echo "Queja recibida! Por las molestias recibio un cupon de descuento $cupon->id";
-	} else {
-		echo "Ya se realizó una devolución por esta venta!\n";
-	}
-} else {
-	echo "No existe una venta activa con número de pedido N°$numPedido.\n";
-	echo "Los disponibles son:\n";
-	foreach ($arrayVentas as $venta) {
-		if ($venta->activo)
-			echo '~ ' . $venta->numeroPedido . "\n";
-	}
-}

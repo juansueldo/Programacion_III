@@ -17,7 +17,7 @@ $fechaFin = $_POST['fechaFin'];
 $tipo = $_POST['tipo'];
 $mail = $_POST['mail'];
 
-echo "a - Se vendieron " . HamburguesasVendidas($arrayVentas) . " de hamburguesas";
+echo "a - Se vendieron " . HamburguesasVendidas($arrayVentas, $fecha) . " de hamburguesas";
 echo "\n********************************************************\n";
 echo VentasPorNombre($fechaIncio, $fechaFin, $arrayVentas);
 echo "\n********************************************************\n";

@@ -11,6 +11,7 @@ class Venta
     public string $tipoHamburguesa;
     public string $aderezoHamburguesa;
     public int $cantidadHamburguesa;
+    public float $precio;
     public string $fechaPedido;
     public bool $activo;
     #endregion
@@ -75,6 +76,7 @@ class Venta
     {
         $cantidad <= 0 ? $this->cantidadHamburguesa = 1 : $this->cantidadHamburguesa = $cantidad;
     }
+
     //Asigna la fecha del pedido de manera aletoria
     function setFecha()
     {
@@ -84,6 +86,10 @@ class Venta
         $fecha_aleatoria = mt_rand($fecha_incio, $fecha_fin);
         $fecha =  date($formato, $fecha_aleatoria);
         $this->fechaPedido = $fecha;
+    }
+    public function setPrecio(float $precio)
+    {
+        $precio <= 0 ? $this->precio = 1000 : $this->precio = $precio;
     }
     #endregion
 
@@ -161,6 +167,12 @@ class Venta
             }
         }
 
+        return $retorno;
+    }
+    public function MostrarVenta(){
+        $retorno = "Nro pedido: " . $this->numeroPedido . "\n ID: " . $this->id . "\n Email: ". $this->mail . "\n Nombre: ". 
+        $this->nombreHamburguesa . "\n Tipo: ". $this->tipoHamburguesa . "\n Aderezo: ". $this->aderezoHamburguesa . 
+        "\n Cantidad: " . $this->cantidadHamburguesa . "\n Fecha: ". $this->fechaPedido  .  $this->activo ? "\n activo" : "\n no esta activa" ."\n";
         return $retorno;
     }
     #endregion

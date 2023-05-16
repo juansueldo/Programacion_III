@@ -1,7 +1,8 @@
 <?php
 include "./Clases/Venta.php";
 
-$listaDeVentas = array();
+$arrayVentas = null;
+$ventaAuxiliar = null;
 $listaDeJSON = Archivos::LeerArchivoJSON("./Archivos/Venta.json");
 
 $datos = json_decode(file_get_contents("php://input"), true);
@@ -15,24 +16,24 @@ if($listaDeJSON!=null &&count($listaDeJSON)>0)
         $ventaAuxiliar->id = $ventaJson['id'];
         $ventaAuxiliar->fechaPedido = $ventaJson['fechaPedido'];
         $ventaAuxiliar->numeroPedido = $ventaJson['numeroPedido'];
-        array_push($listaDeVentas,$ventaAuxiliar);
     }
 }
+$arrayVentas[] = $ventaAuxiliar;
 
-for ($i=0; $i < count($listaDeVentas); $i++) { 
-    if(strcmp($listaDeVentas[$i]->numeroPedido,$datos["numeroPedido"])==0){
-        moverImagen($listaDeVentas[$i]);
-        unset($listaDeVentas[$i]);
+for ($i=0; $i < count($arrayVentas); $i++) { 
+    if(strcmp($arrayVentas[$i]->numeroPedido,$datos["numeroPedido"])==0){
+        moverImagen($arrayVentas[$i]);
+        unset($arrayVentas[$i]);
         break;
     }
 }
 
-
+Archivos::guardarObjetoJSON("./Archivos/Venta.json",$arrayVentas);
 function moverImagen($venta) {
     $mailSeparado = explode("@",$venta->mail); 
     $archivo = $venta->tipoHamburguesa . '_' . $venta->nombreHamburguesa . '_' . $mailSeparado[0] . '_' . $venta->fechaPedido;
-    $ruta_origen = "./ImagenesDeLaVenta/" . $archivo .  ".jpg";
-    $ruta_destino = "./BACKUPVENTAS/" . $archivo . ".jpg";
+    $ruta_origen = "ImagenesDeLaVenta/2023/" . $archivo .  ".jpg";
+    $ruta_destino = "BACKUPVENTAS/2023/" . $archivo . ".jpg";
 
     // Verificar si la imagen existe en el directorio origen
     if (!file_exists($ruta_origen)) {
@@ -48,4 +49,4 @@ function moverImagen($venta) {
     }
 }
 
-Archivos::guardarObjetoJSON("./Archivos/Venta.json",$listaDeVentas);
+

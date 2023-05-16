@@ -3,19 +3,26 @@ include_once "Archivos.php";
 
 class CuponDescuento
 {
-    public int $id;
-    public int $devolucionId;
-    public string $causa;
-    public int $porcentajeDescuento;
-    public string $estado;
+    public  $id;
+    public  $devolucionId;
+    public  $causa;
+    public  $porcentajeDescuento;
+    public  $fecha;
+    public  $estado;
 
-    public function __construct(int $devolucionId, string $causa)
+
+    public function setID()
     {
-        $this->id = CuponDescuento::NuevoId(Archivos::LeerArchivoJSON("./Archivos/Cupones.json"));
+        $this->id = count(Archivos::LeerArchivoJSON("./Archivos/Cupones.json")) + 1;
+    }
+    public function __construct($devolucionId,  $causa, $fecha)
+    {
+        $this->setID();
         $this->devolucionId = $devolucionId;
         $this->causa = empty(trim($causa)) ? 'Distintos sabores' : $causa;
-        $this->porcentajeDescuento = 10;
-        $this->estado = "no usado";
+        $this->porcentajeDescuento = 0.10;
+        $this->fecha = $this->sumarDias($fecha, 3);
+        $this->estado = false;
     }
 
     public static function NuevoId(array $arrayCupones)
@@ -35,16 +42,27 @@ class CuponDescuento
         return $numero;
     }
 
-    public static function BuscarCuponActivo(array $cuponesExistentes, int $idCupon)
+    public static function BuscarCuponActivo(array $cuponesExistentes, int $id)
     {
         $retorno = -1;
         for ($i = 0; $i < count($cuponesExistentes); $i++) {
-            if ($idCupon == $cuponesExistentes[$i]['id'] &&
-                !strcasecmp($cuponesExistentes[$i]['estado'], "no usado")) {
+            if (
+                $id == $cuponesExistentes[$i]['id'] &&
+                !strcasecmp($cuponesExistentes[$i]['estado'], "no usado")
+            ) {
                 $retorno =  $i;
             }
         }
 
         return $retorno;
+    }
+    function sumarDias($fecha, $dias)
+    {
+
+        $fechaObjeto = new DateTime($fecha);
+        $fechaObjeto->add(new DateInterval('P' . $dias . 'D'));
+        $fechaSumada = $fechaObjeto->format('Y-m-d');
+
+        return $fechaSumada;
     }
 }
