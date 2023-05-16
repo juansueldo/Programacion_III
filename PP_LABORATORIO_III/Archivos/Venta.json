@@ -1,0 +1,68 @@
+[
+    {
+        "id": 1,
+        "numeroPedido": 2072,
+        "mail": "juan@gmail.com",
+        "nombreHamburguesa": "cuarto",
+        "tipoHamburguesa": "simple",
+        "aderezoHamburguesa": "mayonesa",
+        "cantidadHamburguesa": 3,
+        "fechaPedido": "2020-03-31",
+        "activo": true
+    },
+    {
+        "id": 2,
+        "numeroPedido": 6300,
+        "mail": "natalia@gmail.com",
+        "nombreHamburguesa": "cuarto",
+        "tipoHamburguesa": "doble",
+        "aderezoHamburguesa": "mayonesa",
+        "cantidadHamburguesa": 2,
+        "fechaPedido": "2021-12-19",
+        "activo": true
+    },
+    {
+        "id": 3,
+        "numeroPedido": 6976,
+        "mail": "natalia@gmail.com",
+        "nombreHamburguesa": "mcburguer",
+        "tipoHamburguesa": "simple",
+        "aderezoHamburguesa": "mayonesa",
+        "cantidadHamburguesa": 2,
+        "fechaPedido": "2020-10-04",
+        "activo": true
+    },
+    {
+        "id": 4,
+        "numeroPedido": 4249,
+        "mail": "natalia@gmail.com",
+        "nombreHamburguesa": "mcburguer",
+        "tipoHamburguesa": "doble",
+        "aderezoHamburguesa": "mayonesa",
+        "cantidadHamburguesa": 2,
+        "fechaPedido": "2019-01-16",
+        "activo": true
+    },
+    {
+        "id": 5,
+        "numeroPedido": 3049,
+        "mail": "natalia@gmail.com",
+        "nombreHamburguesa": "mcburguer",
+        "tipoHamburguesa": "simple",
+        "aderezoHamburguesa": "mayonesa",
+        "cantidadHamburguesa": 2,
+        "fechaPedido": "2021-10-04",
+        "activo": true
+    },
+    {
+        "id": 6,
+        "numeroPedido": 6044,
+        "mail": "natalia@gmail.com",
+        "nombreHamburguesa": "mcburguer",
+        "tipoHamburguesa": "simple",
+        "aderezoHamburguesa": "mayonesa",
+        "cantidadHamburguesa": 2,
+        "fechaPedido": "2023-03-20",
+        "activo": true
+    }
+]
