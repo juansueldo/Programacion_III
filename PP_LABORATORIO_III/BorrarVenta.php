@@ -22,7 +22,7 @@ $arrayVentas[] = $ventaAuxiliar;
 
 for ($i=0; $i < count($arrayVentas); $i++) { 
     if(strcmp($arrayVentas[$i]->numeroPedido,$datos["numeroPedido"])==0){
-        moverImagen($arrayVentas[$i]);
+        echo moverImagen($arrayVentas[$i]);
         unset($arrayVentas[$i]);
         break;
     }
@@ -30,6 +30,7 @@ for ($i=0; $i < count($arrayVentas); $i++) {
 
 Archivos::guardarObjetoJSON("./Archivos/Venta.json",$arrayVentas);
 function moverImagen($venta) {
+    $retorno = "No se pudo mover la imagen";
     $mailSeparado = explode("@",$venta->mail); 
     $archivo = $venta->tipoHamburguesa . '_' . $venta->nombreHamburguesa . '_' . $mailSeparado[0] . '_' . $venta->fechaPedido;
     $ruta_origen = "ImagenesDeLaVenta/2023/" . $archivo .  ".jpg";
@@ -37,16 +38,17 @@ function moverImagen($venta) {
 
     // Verificar si la imagen existe en el directorio origen
     if (!file_exists($ruta_origen)) {
-        echo "La imagen $archivo no existe en el directorio $ruta_origen.";
+        $retorno = "La imagen $archivo no existe en el directorio $ruta_origen.";
         return;
     }
 
     // Mover la imagen al directorio destino
     if (rename($ruta_origen, $ruta_destino)) {
-        echo "La imagen $archivo ha sido movida del directorio $ruta_origen al directorio $ruta_destino.";
+        $retorno = "La imagen $archivo ha sido movida del directorio $ruta_origen al directorio $ruta_destino.";
     } else {
-        echo "Ha ocurrido un error al intentar mover la imagen $archivo del directorio $ruta_origen al directorio $ruta_destino.";
+        $retorno = "Ha ocurrido un error al intentar mover la imagen $archivo del directorio $ruta_origen al directorio $ruta_destino.";
     }
+    return $retorno;
 }
 
 

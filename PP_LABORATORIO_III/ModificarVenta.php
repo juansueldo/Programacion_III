@@ -7,7 +7,6 @@ $listaDeJSON = Archivos::LeerArchivoJSON("./Archivos/Venta.json");
 
 $datos = json_decode(file_get_contents("php://input"), true);
 
-
 if($listaDeJSON!=null && count($listaDeJSON)>0)
 {
     foreach ($listaDeJSON as $ventaJson)
@@ -21,6 +20,9 @@ if($listaDeJSON!=null && count($listaDeJSON)>0)
         array_push($listaDeVentas,$ventaAuxiliar);
     }
 }
+else{
+    echo "No se realizo ninguna venta\n";
+}
 
 foreach ($listaDeVentas as $venta ) {
     if($venta->numeroPedido == $datos["numeroPedido"] && $venta->mail == $datos["mail"])
@@ -31,7 +33,10 @@ foreach ($listaDeVentas as $venta ) {
         $venta->cantidadHamburguesa = $datos["cantidadHamburguesa"];
         $venta->precio = $datos["precio"];
         echo "Se modificó la venta\n";
-
+        break;
+    }
+    else{
+        echo "No se encontro la venta\n";
     }
   
 }

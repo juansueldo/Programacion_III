@@ -98,6 +98,19 @@ class Hamburguesa
 
         return $retorno;
     }
+    public function Equals($hamburguesa){
+        return !strcasecmp($this->nombre, $hamburguesa->nombre) && !strcasecmp($this->tipo, $hamburguesa->tipo);
+    }
+
+    public static function BuscarHamburguesa(array $hamburguesasExistentes, Hamburguesa $hamburguesa){
+        for($i = 0; $i < count($hamburguesasExistentes); $i++){
+            if($hamburguesa->Equals($hamburguesasExistentes[$i])){
+                return $i;
+            }
+        }
+
+        return -1;
+    }
     #endregion
 
 }

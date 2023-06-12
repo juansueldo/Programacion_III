@@ -1,26 +1,26 @@
 [
     {
         "id": 1,
-        "numeroPedido": 6068,
+        "numeroPedido": 7149,
         "mail": "juan@gmail.com",
-        "nombreHamburguesa": "simplepampeano",
-        "tipoHamburguesa": "simple",
+        "nombreHamburguesa": "dobleburguer",
+        "tipoHamburguesa": "doble",
         "aderezoHamburguesa": "ketchup",
         "cantidadHamburguesa": 2,
-        "precio": 3941,
-        "fechaPedido": "2022-10-03",
-        "activo": true
+        "precio": 5060,
+        "fechaPedido": "2023-06-12",
+        "activo": false
     },
     {
         "id": 2,
-        "numeroPedido": 7895,
+        "numeroPedido": 1489,
         "mail": "natalia@gmail.com",
-        "nombreHamburguesa": "mcburguer",
-        "tipoHamburguesa": "simple",
+        "nombreHamburguesa": "simpleburguerjr",
+        "tipoHamburguesa": "doble",
         "aderezoHamburguesa": "mayonesa",
-        "cantidadHamburguesa": 8,
-        "precio": 20404,
-        "fechaPedido": "2020-05-24",
+        "cantidadHamburguesa": 2,
+        "precio": 3020,
+        "fechaPedido": "2023-06-12",
         "activo": true
     }
 ]

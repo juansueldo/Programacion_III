@@ -1,8 +1,10 @@
-{
-    "id": 8,
-    "devolucionId": 904,
-    "causa": "Mal estado",
-    "porcentajeDescuento": 0.1,
-    "fecha": "2022-10-06",
+[
+  {
+    "id": 1,
+    "devolucionId": 2645,
+    "causa": "No era lo pedido",
+    "porcentajeDescuento": 0.9,
+    "fecha": "2023-06-15",
     "estado": false
-}
+  }
+]

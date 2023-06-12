@@ -12,13 +12,12 @@ $arrayDevoluciones = Archivos::LeerArchivoJSON("./Archivos/Devoluciones.json");
 $numeroPedido = $_POST["numeroPedido"];
 $causa = $_POST["causa"];
 
-$ventas = Archivos::LeerArchivoJSON(".Ventas.json");
 $ventaExistente = DevolverVenta($arrayVentas, $numeroPedido);
 
 
 if($ventaExistente != null ){
     echo "Pedido encontrado \n";
-    $devolucion = new Devolucion($causa, $ventaExistente['numeroPedido'], 904);
+    $devolucion = new Devolucion($causa, $ventaExistente['numeroPedido']);
     Archivos::GuardarObjetoJSON("./Archivos/Devoluciones.json",$devolucion);
     Devolucion::GuardarImagenClienteEnojado($ventaExistente);
     $cupon = new CuponDescuento($devolucion->idCupon, $devolucion->causa,$ventaExistente['fechaPedido']);
@@ -31,7 +30,7 @@ else{
 
 
 function DevolverVenta($arrayVentas, $numeroPedido){
-    $venta = null;
+    $venta = [];
     foreach ($arrayVentas as &$auxVenta) {
         if ($auxVenta['numeroPedido'] == $numeroPedido && $auxVenta['activo'] == true) {
             $venta = &$auxVenta;

@@ -1,6 +1,8 @@
-{
+[
+  {
     "id": 1,
-    "causa": "Mal estado",
-    "numeroPedido": 6068,
-    "idCupon": 904
-}
+    "causa": "No era lo pedido",
+    "numeroPedido": 7149,
+    "idCupon": 2645
+  }
+]

@@ -2,9 +2,9 @@
 include "./Clases/Hamburguesa.php";
 
 $cargaHamburguesa = new Hamburguesa($_POST['nombre'], $_POST['precio'], $_POST['tipo'],$_POST['aderezo'], $_POST['cantidad']);
-echo agregarPizza("./Archivos/Hamburguesa.json", $cargaHamburguesa);
+echo agregarHamburguesa ("./Archivos/Hamburguesa.json", $cargaHamburguesa);
 
-function agregarPizza($archivo, $cargaHamburguesa)
+function agregarHamburguesa($archivo, $cargaHamburguesa)
 {
     $retorno = "No se agrego ninguna hamburguesa";
 

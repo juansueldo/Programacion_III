@@ -1,30 +1,29 @@
 <?php
-include "./Clases/Hamburguesa.php";
-include "./Clases/Venta.php";
-include "./Clases/CuponesDescuento.php";
+include_once "./Clases/Hamburguesa.php";
+include_once "./Clases/Venta.php";
+include_once "./Clases/CuponesDescuento.php";
 
 
 $arrayHamburguesas = Archivos::LeerArchivoJSON('./Archivos/Hamburguesa.json');
-$arrayCupones = Archivos::LeerArchivoJSON("./Archivos/Cupones.json");
-$venta = new Venta($_POST['mail'], $_POST['nombre'], $_POST['tipo'],$_POST['aderezo'], $_POST['cantidad']);
+$cupones = './Archivos/Cupones.json';
+$arrayCupones = Archivos::LeerArchivoJSON($cupones);
+$venta = new Venta($_POST['mail'], $_POST['nombreHamburguesa'], $_POST['tipoHamburguesa'],$_POST['aderezoHamburguesa'], $_POST['cantidadHamburguesa']);
 $devolucionId = $_POST['devolucionId'];
 
-echo agregarHamburguesa($arrayHamburguesas, $venta,$arrayCupones, $devolucionId);
+echo agregarHamburguesa($arrayHamburguesas, $venta, $arrayCupones, $devolucionId);
 
-//Recibe por parametro un array de hamburguesas y un objeto de tipo venta  si existe el nombre y el tipo de hamburguesa
-//la venta se realiza, disminuyento el stock de dicha hamburguesa
 function agregarHamburguesa($arrayHamburguesas, $venta, $arrayCupones, $devolucionId)
 {
-    $arrayVentas = Archivos::LeerArchivoJSON("Venta.json");
+    $arrayVentas = Archivos::LeerArchivoJSON("./Archivos/Venta.json");
     $retorno = "No se vendió ninguna hamburguesa";
-    $hamburguesaExistente = null;
+    $hamburguesaExistente = empty('');
     foreach ($arrayHamburguesas as &$hamburguesa) {
         if ($hamburguesa['nombre'] == $venta->nombreHamburguesa && $hamburguesa['tipo'] == $venta->tipoHamburguesa) {
             $hamburguesaExistente = &$hamburguesa;
             break;
         }
     }
-    if ($hamburguesaExistente != null) {
+    if (!empty($hamburguesaExistente)) {
         if ($hamburguesaExistente['cantidad'] > 0 && $hamburguesaExistente['cantidad'] >= $venta->cantidadHamburguesa) {
             $hamburguesaExistente['cantidad'] -= $venta->cantidadHamburguesa;
             $venta->precio = $hamburguesaExistente['precio'] * $venta->cantidadHamburguesa;
@@ -33,11 +32,12 @@ function agregarHamburguesa($arrayHamburguesas, $venta, $arrayCupones, $devoluci
             } else {
                 $retorno = "Se vendió la hamburguesa: " . $hamburguesaExistente['nombre'] . ", del tipo: " . $hamburguesaExistente['tipo'];
             }
+            $venta->GuardarImagenVenta();
             $arrayVentas[] = $venta;
-            Archivos::GuardarObjetoJSON("Hamburguesa.json", $arrayHamburguesas);
-            Archivos::GuardarObjetoJSON("Venta.json", $arrayVentas);
-            Archivos::GuardarObjetoJSON("Cupones.json", $arrayCupones);
-            return $retorno; // Se agrega un return aquí para salir de la función después de realizar la venta exitosamente
+            Archivos::GuardarObjetoJSON("./Archivos/Hamburguesa.json", $arrayHamburguesas);
+            Archivos::GuardarObjetoJSON("./Archivos/Venta.json", $arrayVentas);
+            
+            return $retorno; 
         } else {
             $retorno = "No hay stock suficiente";
         }
@@ -45,29 +45,34 @@ function agregarHamburguesa($arrayHamburguesas, $venta, $arrayCupones, $devoluci
 
     return $retorno;
 }
-function aplicarDescuento($arrayCupones, $devolucionId, $venta){
+
+function aplicarDescuento(array $arrayCupones, $devolucionId, $venta)
+{
     $retorno = false;
     $cuponExistente = null;
     foreach ($arrayCupones as &$cupon) {
-        if ($cupon['devolucionId'] == $devolucionId && compararFechas($venta['fecha'], $cupon['fecha']) == true) {
-            $cuponExistente['estado'] = false;
+        if ($cupon['devolucionId'] == $devolucionId && $cupon['estado'] === false && compararFechas($cupon['fecha'], $venta->fechaPedido)){
             $cuponExistente = &$cupon;
             break;
         }
     }
-    if($cuponExistente != null){
-        $venta['precio'] *= $cuponExistente['porcentajeDescuento'];
+    if ($cuponExistente !== null) {
+        $venta->precio *= $cuponExistente['porcentajeDescuento'];
+        $cuponExistente['estado'] = true;
+        Archivos::GuardarObjetoJSON("./Archivos/Cupones.json", $arrayCupones);
         $retorno = true;
     }
     return $retorno;
 }
-function compararFechas($fecha1, $fecha2) {
+
+function compararFechas($fecha1, $fecha2)
+{
     $retorno = false;
     $fechaObjeto1 = new DateTime($fecha1);
     $fechaObjeto2 = new DateTime($fecha2);
 
-    if ($fechaObjeto1 > $fechaObjeto2) {
-        $retorno = true; 
-    } 
+    if ($fechaObjeto1 >= $fechaObjeto2) {
+        $retorno = true;
+    }
     return $retorno;
 }

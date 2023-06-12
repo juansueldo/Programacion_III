@@ -13,13 +13,16 @@ class Devolucion
     {
         $this->id = count(Archivos::LeerArchivoJSON("./Archivos/Devolucion.json")) + 1;
     }
-
-    public function __construct( $causa,  $numeroDePedido,  $idCupon)
+    public function setIdCupon()
+    {
+        $this->idCupon = Devolucion::NuevoIdDevoluciones(Archivos::LeerArchivoJSON("./Archivos/Devolucion.json"));
+    }
+    public function __construct( $causa,  $numeroDePedido)
     {
         $this->setID();
         $this->causa = $causa;
         $this->numeroPedido = $numeroDePedido;
-        $this->idCupon = $idCupon;
+        $this->setIdCupon();
     }
 
     public static function BuscarDevolucion($devolucionesExistentes, $numeroPedido)
@@ -50,5 +53,21 @@ class Devolucion
         }
 
         return $retorno;
+    }
+    public static function NuevoIdDevoluciones(array $arrayCupones)
+    {
+        $numero = random_int(1000, 9999);
+        do {
+            $existe = false;
+            foreach ($arrayCupones as $cupon) {
+                if ($numero == $cupon->id) {
+                    $numero = random_int(1000, 9999);
+                    $existe = true;
+                    break;
+                }
+            }
+        } while ($existe);
+
+        return $numero;
     }
 }

@@ -17,6 +17,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     case 'DevolverHamburguesa':
       include 'DevolverHamburguesa.php';
       break;
+    case 'ConsultasDevoluciones':
+        include 'ConsultasDevoluciones.php';
+        break;
     default:
       echo 'Ruta no válida';
   }

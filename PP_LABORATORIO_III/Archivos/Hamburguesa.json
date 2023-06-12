@@ -1,26 +1,26 @@
 [
     {
         "id": 1,
-        "nombre": "mcburguer",
-        "precio": "2550.5",
-        "tipo": "doble",
+        "nombre": "simpleburguerjr",
+        "precio": "1510",
+        "tipo": "simple",
         "aderezo": "mayonesa",
-        "cantidad": 50
+        "cantidad": 8
     },
     {
         "id": 2,
-        "nombre": "doblecuarto",
-        "precio": "3550.5",
-        "tipo": "doble",
+        "nombre": "classicburger",
+        "precio": "1830",
+        "tipo": "simple",
         "aderezo": "mostaza",
-        "cantidad": 29
+        "cantidad": 25
     },
     {
         "id": 3,
-        "nombre": "simplepampeano",
-        "precio": "1970.5",
-        "tipo": "simple",
+        "nombre": "dobleburguer",
+        "precio": "2530",
+        "tipo": "doble",
         "aderezo": "ketchup",
-        "cantidad": 8
+        "cantidad": 12
     }
 ]

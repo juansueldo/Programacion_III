@@ -21,7 +21,7 @@ class Venta
     //Asgina un numero de pedido
     public function setNumeroPedido()
     {
-        $this->numeroPedido = Venta::NuevoNumPedido(Archivos::LeerArchivoJSON("./Archivos/Ventas.json"));
+        $this->numeroPedido = Venta::NuevoNumPedido(Archivos::LeerArchivoJSON("./Archivos/Venta.json"));
     }
     //Asigna el ID autoincremental
     public function setID()
@@ -80,12 +80,7 @@ class Venta
     //Asigna la fecha del pedido de manera aletoria
     function setFecha()
     {
-        $formato = "Y-m-d";
-        $fecha_incio = strtotime("2019-01-01");
-        $fecha_fin = strtotime("2023-12-31");
-        $fecha_aleatoria = mt_rand($fecha_incio, $fecha_fin);
-        $fecha =  date($formato, $fecha_aleatoria);
-        $this->fechaPedido = $fecha;
+        $this->fechaPedido = date("Y-m-d");
     }
     public function setPrecio(float $precio)
     {
@@ -129,7 +124,7 @@ class Venta
         do {
             $existe = false;
             foreach ($arrayVentas as $venta) {
-                if ($numero == $venta->numeroPedido) {
+                if ($numero == $venta['numeroPedido']) {
                     $numero = random_int(1000, 9999);
                     $existe = true;
                     break;
